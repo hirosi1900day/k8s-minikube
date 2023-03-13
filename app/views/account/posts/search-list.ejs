@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>検索</title>
+
+  <%- include("../../_share/stylesheets.ejs") %>
+</head>
+
+<body>
+
+  <%- include("../../_share/navbar.ejs") %>
+  <div class="container-fluid">
+    <div class="row">
+      <%- include("../sidemenu.ejs", { page: "posts" }) %>
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+
+        <div class="border-bottom mt-5 mb-5">
+          <h1>記事</h1>
+        </div>
+
+        <div class="row mt-5 mb-5">
+          <div class="col-sm-7">
+            <a class="btn btn-primary" href="/account/posts/regist">新しい投稿</a>
+          </div>
+          <div class="col-sm-1">
+            <span class="badge badge-secondary">計 <%= count %> 件</span>
+          </div>
+          <div class="col-sm-4">
+            <form class="form-inline" method="GET" action="/account/posts/search">
+              <input class="form-control" type="text" id="keyword" name="keyword" value="<%= keyword %>" />
+              <input class="btn btn-default ml-2" type="submit" value="検索" />
+            </form>
+          </div>
+        </div>
+
+        <div class="mt-5 mb-5">
+          <% for (var item of list) { %>
+          <%- include("./search-item.ejs", item)%>
+          <% } %>
+        </div>
+
+        <nav>
+          <ul class="pagination">
+            <% for(var i = 1; i <= pagenation.max; i++) { %>
+            <% if( pagenation.current !== i){ %>
+            <li class="page-item"><a class="page-link"
+                href="/account/posts/search/?keyword=<%= keyword %>&page=<%= i %>"><%= i %></a></li>
+            <% } else {%>
+            <li class="page-item active"><span class="page-link disabled"><%= i %></span></a></li>
+            <% } %>
+            <% } %>
+          </ul>
+        </nav>
+
+      </main>
+    </div>
+  </div>
+
+  <%- include("../../_share/javascripts.ejs") %>
+  <script src="/public/javascripts/account/posts/regist.js"></script>
+</body>
+
+</html>

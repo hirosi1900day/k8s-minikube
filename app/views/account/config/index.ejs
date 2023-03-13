@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>設定</title>
+
+  <%- include("../../_share/stylesheets.ejs") %>
+</head>
+
+<body>
+
+  <%- include("../../_share/navbar.ejs") %>
+  <div class="container-fluid">
+    <div class="row">
+      <%- include("../sidemenu.ejs", { page: "config" }) %>
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+
+        <div class="border-bottom mt-5 mb-5">
+          <h1>設定</h1>
+        </div>
+
+        <div class="card mt-2">
+          <div class="card-body">
+            <h5 class="card-title">基本</h5>
+            <p class="card-text">xxxxxxxxxx</p>
+          </div>
+        </div>
+        <div class="card mt-2">
+          <div class="card-body">
+            <h5 class="card-title">投稿</h5>
+            <p class="card-text">xxxxxxxxxx</p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <%- include("../../_share/javascripts.ejs") %>
+</body>
+
+</html>
