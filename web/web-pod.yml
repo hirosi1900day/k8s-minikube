@@ -67,8 +67,8 @@ data:
     }
 
 ---
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: nginx
   namespace: default
@@ -76,19 +76,38 @@ metadata:
     app: weblog
     type: frontend
 spec:
-  containers:
-  - name: nginx
-    image: weblog-web:v1.0.0
-    imagePullPolicy: Never
-    ports:
-    - containerPort: 80
-    env:
-    - name: "APPLICATION_HOST"
-      value: "app-svc:3000"
-    volumeMounts:
-    - name: config-volume
-      mountPath: /home/nginx
-  volumes:
-  - name: config-volume
-    configMap:
-      name: nginx-config
+  replicas: 3
+  selector:
+    matchLabels:
+      app: weblog
+      type: frontend
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  revisionHistoryLimit: 14
+  template:
+    metadata:
+      name: nginx
+      namespace: default
+      labels:
+        app: weblog
+        type: frontend
+    spec:
+      containers:
+      - name: nginx
+        image: weblog-web:v1.0.0
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+        env:
+        - name: "APPLICATION_HOST"
+          value: "app-svc:3000"
+        volumeMounts:
+        - name: config-volume
+          mountPath: /home/nginx
+      volumes:
+      - name: config-volume
+        configMap:
+          name: nginx-config
